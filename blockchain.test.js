@@ -90,9 +90,9 @@ describe ('Blockchain', () => {
     describe('when new chain is longer', () => {
 
       beforeEach(() =>{
-        blockchain.addBlock({data: 'one'});
-        blockchain.addBlock({data: 'two'});
-        blockchain.addBlock({data: 'three'});
+        newChain.addBlock({data: 'one'});
+        newChain.addBlock({data: 'two'});
+        newChain.addBlock({data: 'three'});
       });
 
       describe('and the chain is invalid', () => {
