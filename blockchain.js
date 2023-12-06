@@ -23,15 +23,17 @@ class Blockchain{
       const block = chain[i];
       const actualLastHash = chain[i-1].hash;
 
-      const timestamp = block.timestamp;
-      const lastHash = block.lastHash;
-      const hash = block.hash;
-      const data = block.data;
+      // const timestamp = block.timestamp;
+      // const lastHash = block.lastHash;
+      // const hash = block.hash;
+      // const data = block.data;
+      // const difficulty = block.difficulty;
+      // const nonce = block.nonce;
 
-      // const {timestamp, lastHash, hash, data} = block;
+      const {timestamp, lastHash, hash, difficulty, nonce, data} = block;
 
       if(lastHash !== actualLastHash) return false;
-      if(hash !== cryptoHash(timestamp, lastHash, data)) return false;
+      if(hash !== cryptoHash(timestamp, lastHash, nonce, difficulty, data)) return false;
     }
 
     return true;
