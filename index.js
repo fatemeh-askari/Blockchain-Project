@@ -1,10 +1,17 @@
 const express = require ('express');
 const Blockchain = require('./blockchain');
+const Pubsub = require('./pubsub');
 
 const app = express();
 
 
 const blockchain = new Blockchain();
+const pubsub = new Pubsub({blockchain});
+
+setTimeout(() => {
+  pubsub.broadcastChain();
+}, 1000);
+
 app.use(express.json());
 
 app.get('/api/blocks', (req, res) => {
