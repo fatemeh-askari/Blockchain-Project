@@ -1,7 +1,8 @@
 const express = require ('express');
 const Blockchain = require('./blockchain');
 const Pubsub = require('./pubsub');
-const tcpPortUsed = require('tcp-port-used')
+const tcpPortUsed = require('tcp-port-used');
+const { default: axios } = require('axios');
 
 const app = express();
 
@@ -28,7 +29,13 @@ app.post('/api/mine', (req, res) => {
   res.redirect('/api/blocks');
 });
 
+const rootPort = 3000;
 let PORT = 3000;
+
+const syncChains = async () => {
+  const response = await axios.get(`https:localhost:${rootPort}/api/blocks`);
+  blockchain.replaceChain(response.data)
+}
 
 tcpPortUsed.check(3000, '127.0.0.1')
 .then(function(inUse){
@@ -36,7 +43,8 @@ tcpPortUsed.check(3000, '127.0.0.1')
     PORT += Math.ceil(Math.random() * 1000);
   }
   app.listen(PORT, () => {
-    console.log(`listening at hocalhost:${PORT}`)
+    console.log(`listening at hocalhost:${PORT}`);
+    if(PORT !== rootPort) syncChains;
   });
 })
 
