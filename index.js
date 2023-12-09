@@ -9,9 +9,9 @@ const app = express();
 const blockchain = new Blockchain();
 const pubsub = new Pubsub({blockchain});
 
-setTimeout(() => {
-  pubsub.broadcastChain();
-}, 1000);
+// setTimeout(() => {
+//   pubsub.broadcastChain();
+// }, 1000);
 
 app.use(express.json());
 
@@ -24,6 +24,7 @@ app.post('/api/mine', (req, res) => {
   // const {data} = re.body;
 
   blockchain.addBlock({data});
+  pubsub.broadcastChain();
   res.redirect('/api/blocks');
 });
 
